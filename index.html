@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Capture the Flag — Arena</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+    <!-- Main Menu -->
+    <section id="screen-menu" class="screen active">
+      <div class="menu-bg"></div>
+      <div class="menu-card">
+        <h1 class="game-title">
+          <span class="title-line">CAPTURE</span>
+          <span class="title-line accent">THE FLAG</span>
+          <span class="title-sub">2D ARENA</span>
+        </h1>
+
+        <nav class="tabs">
+          <button class="tab active" data-tab="play">Play</button>
+          <button class="tab" data-tab="customize">Customize</button>
+          <button class="tab" data-tab="howto">How to Play</button>
+          <button class="tab" data-tab="online">Online</button>
+        </nav>
+
+        <div class="tab-panels">
+          <!-- Play Tab -->
+          <div class="tab-panel active" data-panel="play">
+            <div class="play-options">
+              <label class="field-label">Team Size
+                <select id="team-size">
+                  <option value="1">1 v 1</option>
+                  <option value="2" selected>2 v 2</option>
+                  <option value="3">3 v 3</option>
+                  <option value="4">4 v 4</option>
+                </select>
+              </label>
+              <label class="field-label">Your Team
+                <select id="player-team">
+                  <option value="red">Red (Left)</option>
+                  <option value="blue">Blue (Right)</option>
+                </select>
+              </label>
+              <label class="field-label">Score to Win
+                <select id="score-limit">
+                  <option value="3">3</option>
+                  <option value="5" selected>5</option>
+                  <option value="7">7</option>
+                </select>
+              </label>
+              <label class="field-label">Bot Difficulty
+                <select id="bot-difficulty">
+                  <option value="easy">Easy</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </label>
+            </div>
+            <button id="btn-start-local" class="primary-btn big">Start Local Match</button>
+          </div>
+
+          <!-- Customize Tab -->
+          <div class="tab-panel" data-panel="customize">
+            <div class="customize-grid">
+              <div class="custom-section">
+                <h3>Character</h3>
+                <div class="custom-row">
+                  <label>Color</label>
+                  <div class="color-swatches" id="char-colors"></div>
+                </div>
+                <div class="custom-row">
+                  <label>Body Shape</label>
+                  <div class="shape-options" id="char-shapes">
+                    <button data-shape="circle" class="shape-btn active">●</button>
+                    <button data-shape="square" class="shape-btn">■</button>
+                    <button data-shape="triangle" class="shape-btn">▲</button>
+                    <button data-shape="diamond" class="shape-btn">◆</button>
+                  </div>
+                </div>
+                <div class="custom-row">
+                  <label>Hat</label>
+                  <select id="char-hat">
+                    <option value="none">None</option>
+                    <option value="cap">Cap</option>
+                    <option value="crown">Crown</option>
+                    <option value="horns">Horns</option>
+                    <option value="halo">Halo</option>
+                  </select>
+                </div>
+                <div class="custom-row">
+                  <label>Name</label>
+                  <input type="text" id="char-name" maxlength="12" value="Player" />
+                </div>
+              </div>
+
+              <div class="custom-section">
+                <h3>Preview</h3>
+                <canvas id="preview-canvas" width="200" height="200"></canvas>
+              </div>
+
+              <div class="custom-section">
+                <h3>Fanfare</h3>
+                <div class="fanfare-list" id="fanfare-list"></div>
+                <button id="fanfare-preview-btn" class="secondary-btn">Preview Selected</button>
+              </div>
+
+              <div class="custom-section">
+                <h3>Banner</h3>
+                <div class="custom-row">
+                  <label>Banner Color</label>
+                  <div class="color-swatches" id="banner-colors"></div>
+                </div>
+                <div class="custom-row">
+                  <label>Accent Color</label>
+                  <div class="color-swatches" id="banner-accent-colors"></div>
+                </div>
+                <div class="custom-row">
+                  <label>Banner Pattern</label>
+                  <select id="banner-pattern">
+                    <option value="stripes">Stripes</option>
+                    <option value="stars">Stars</option>
+                    <option value="chevron">Chevron</option>
+                    <option value="solid">Solid</option>
+                    <option value="flames">Flames</option>
+                    <option value="checker">Checker</option>
+                    <option value="diamonds">Diamonds</option>
+                    <option value="waves">Waves</option>
+                    <option value="burst">Burst</option>
+                    <option value="circuit">Circuit</option>
+                  </select>
+                </div>
+                <div class="custom-row">
+                  <label>Text Style</label>
+                  <select id="banner-font">
+                    <option value="russo">Bold (Russo One)</option>
+                    <option value="rubik">Clean (Rubik)</option>
+                    <option value="mono">Mono</option>
+                  </select>
+                </div>
+                <div class="custom-row">
+                  <label>Text Color</label>
+                  <div class="color-swatches" id="banner-text-colors"></div>
+                </div>
+                <div class="custom-row">
+                  <label>Banner Text</label>
+                  <input type="text" id="banner-text" maxlength="14" value="VICTORY" />
+                </div>
+                <canvas id="banner-preview" width="220" height="120"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- How to Play Tab -->
+          <div class="tab-panel" data-panel="howto">
+            <div class="howto-content">
+              <h3>Objective</h3>
+              <p>Steal the enemy's flag and return it to your base. First team to reach the score limit wins.</p>
+
+              <h3>Controls</h3>
+              <ul class="controls-list">
+                <li><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> or <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> — Move</li>
+                <li><kbd>Mouse</kbd> — Aim</li>
+                <li><kbd>Left Click</kbd> or <kbd>Space</kbd> — Throw flag (when carrying)</li>
+                <li><kbd>Shift</kbd> — Sprint (drains stamina)</li>
+                <li><kbd>E</kbd> — Taunt</li>
+                <li><kbd>Esc</kbd> — Pause / Menu</li>
+              </ul>
+
+              <h3>Rules</h3>
+              <ul class="rules-list">
+                <li>The field is split by a halfway line. While on the <strong>enemy's side</strong>, you can be tagged.</li>
+                <li>Around each base is a <strong>safe zone</strong> — players inside ANY safe zone (their own or the enemy's) cannot be tagged. This gives invaders a window to grab the flag.</li>
+                <li>When tagged, you respawn at your base after a short delay.</li>
+                <li>The flag carrier is slower than other players. Pass the flag to a teammate to move faster.</li>
+                <li>Aim with the mouse and click/press Space to <strong>throw the flag</strong>. Teammates catch it — enemies intercept it.</li>
+                <li>If the enemy touches their own dropped flag, it returns to their base.</li>
+                <li>Carry the enemy flag to <strong>your base</strong> to score. Your fanfare plays and your banner shows for everyone.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Online Tab -->
+          <div class="tab-panel" data-panel="online">
+            <div class="online-content">
+              <div class="online-row">
+                <button id="btn-host" class="primary-btn">Host Game</button>
+                <button id="btn-join" class="primary-btn">Join Game</button>
+              </div>
+              <div class="online-row">
+                <label class="field-label">Room Code
+                  <input type="text" id="room-code" placeholder="6-CHAR CODE" maxlength="6" style="text-transform:uppercase;letter-spacing:3px;font-weight:700;" />
+                </label>
+              </div>
+              <div class="online-row">
+                <div class="connection-status" id="conn-status">Not connected</div>
+              </div>
+              <div class="online-row">
+                <button id="btn-start-online" class="primary-btn big" disabled>Start Online Match</button>
+              </div>
+              <div class="turn-config">
+                <h4>TURN Server (Metered)</h4>
+                <p class="hint" id="turn-status-text">✓ Pre-configured — online play works out of the box.</p>
+                <label>API Key (optional override)
+                  <input type="text" id="turn-api-key" placeholder="Paste your own Metered API key to override" />
+                </label>
+                <button id="btn-save-turn" class="secondary-btn">Save Override</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game Screen -->
+    <section id="screen-game" class="screen">
+      <canvas id="game-canvas" width="1280" height="720"></canvas>
+      <div id="hud">
+        <div class="hud-team red">
+          <span class="hud-label">RED</span>
+          <span class="hud-score" id="score-red">0</span>
+        </div>
+        <div class="hud-center">
+          <div class="hud-timer" id="hud-timer">0:00</div>
+          <div class="hud-message" id="hud-message"></div>
+        </div>
+        <div class="hud-team blue">
+          <span class="hud-score" id="score-blue">0</span>
+          <span class="hud-label">BLUE</span>
+        </div>
+      </div>
+      <div id="banner-overlay" class="hidden"></div>
+      <div id="pause-overlay" class="hidden">
+        <div class="pause-card">
+          <h2>Paused</h2>
+          <button id="btn-resume" class="primary-btn">Resume</button>
+          <button id="btn-quit" class="secondary-btn">Quit to Menu</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game Over Screen -->
+    <section id="screen-gameover" class="screen">
+      <div class="gameover-card">
+        <h2 id="gameover-title">RED WINS</h2>
+        <div class="gameover-scores">
+          <div class="gs red">RED <span id="final-red">0</span></div>
+          <div class="gs blue">BLUE <span id="final-blue">0</span></div>
+        </div>
+        <button id="btn-play-again" class="primary-btn big">Play Again</button>
+        <button id="btn-menu" class="secondary-btn">Main Menu</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- PeerJS for WebRTC signaling -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <!-- Game code (versioned to bust browser cache) -->
+  <script src="js/config.js?v=20260804b"></script>
+  <script src="js/utils.js?v=20260804b"></script>
+  <script src="js/audio.js?v=20260804b"></script>
+  <script src="js/input.js?v=20260804b"></script>
+  <script src="js/particles.js?v=20260804b"></script>
+  <script src="js/flag.js?v=20260804b"></script>
+  <script src="js/player.js?v=20260804b"></script>
+  <script src="js/ai.js?v=20260804b"></script>
+  <script src="js/world.js?v=20260804b"></script>
+  <script src="js/customize.js?v=20260804b"></script>
+  <script src="js/multiplayer.js?v=20260804b"></script>
+  <script src="js/ui.js?v=20260804b"></script>
+  <script src="js/game.js?v=20260804b"></script>
+  <script src="js/main.js?v=20260804b"></script>
+</body>
+</html>
